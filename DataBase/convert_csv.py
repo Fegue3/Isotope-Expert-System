@@ -9,8 +9,6 @@ with open('livechart.csv', newline='', encoding='utf-8') as csvfile:
             numero_neutroes = row['n']
             numero_massa = int(row['z']) + int(row['n'])
             simbolo = row['symbol']
-            meia_vida_valor = row['half_life']
-            meia_vida_unidade = row['unit_hl']
             tipo_decaimento = row['decay_1']
             percentagem = row['decay_1_%'] or '100'
             estabilidade = 'estavel' if row['half_life'].lower() == 'stable' else 'instavel'
@@ -34,7 +32,6 @@ with open('livechart.csv', newline='', encoding='utf-8') as csvfile:
                 f"    numero_neutroes({numero_neutroes}),\n"
                 f"    numero_massa({numero_massa}),\n"
                 f"    estabilidade({estabilidade}),\n"
-                f"    meia_vida('{meia_vida_valor}_{meia_vida_unidade}'),\n"
                 f"    tipo_decaimento('{tipo_decaimento}({percentagem}%)'),\n"
                 f"    raio_nuclear({raio_nuclear}),\n"
                 f"    spin_paridade('{spin_paridade}'),\n"
