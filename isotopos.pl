@@ -60949,33 +60949,8 @@ isotopo(
 
 
 objectivo(Nome) :-
-    abolish(conhece,3),
-    asserta(conhece(def,def,def)),
     write('Qual o simbolo do elemento?'), nl,
     read(Simbolo),
-    encontrar_isotopo(Simbolo, Nome),
-    Nome \= none,
-    mostrar_detalhes(Nome).
-
-encontrar_isotopo(Simbolo, Nome) :-
-    isotopo(
-        nome(Nome),
-        simbolo(Simbolo),
-        numero_atomico(NA),
-        numero_neutroes(NN),
-        numero_massa(NM),
-        estabilidade(Est),
-        _, _, _, _, _, _, _, _, _
-    ),
-    pergunta_numero(numero_atomico, NA),
-    pergunta_numero(numero_neutroes, NN),
-    pergunta_numero(numero_massa, NM),
-    pergunta_texto(estabilidade, Est),
-    !.
-
-encontrar_isotopo(_, none).
-
-mostrar_detalhes(Nome) :-
     isotopo(
         nome(Nome),
         simbolo(Simbolo),
@@ -60985,6 +60960,10 @@ mostrar_detalhes(Nome) :-
         estabilidade(Est),
         MV, TD, RN, SP, MA, EM, EL, AB, DC
     ),
+    pergunta(numero_atomico, NA),
+    pergunta(numero_neutroes, NN),
+    pergunta(numero_massa, NM),
+    pergunta(estabilidade, Est),
     nl, write('Isótopo encontrado: '), write(Nome), nl,
     write('Simbolo: '), write(Simbolo), nl,
     write('Número atómico: '), write(NA), nl,
@@ -61001,42 +60980,18 @@ mostrar_detalhes(Nome) :-
     write('Abundância: '), write(AB), nl,
     write('Descoberta: '), write(DC), nl.
 
+:- dynamic conhece/3.
 
+pergunta(_, Valor) :-
+    var(Valor), !.
 
-pergunta_texto(_, Valor) :-
-    Valor == '', !.
-
-pergunta_texto(Atributo, Valor) :-
+pergunta(Atributo, Valor) :-
     conhece(sim, Atributo, Valor), !.
 
-pergunta_texto(Atributo, Valor) :-
-    \+ conhece(_, Atributo, _),
+pergunta(Atributo, Valor) :-
+    \+ conhece(sim, Atributo, _),
     write('Qual o valor para '), write(Atributo), write('? '),
     read(UserVal),
     asserta(conhece(sim, Atributo, UserVal)),
-    UserVal == Valor.
-
-pergunta_texto(Atributo, Valor) :-
-    conhece(sim, Atributo, Outro),
-    Valor \== Outro, !, fail.
-
-pergunta_numero(_, Valor) :-
-    var(Valor), !.  % aceita campos vazios
-
-pergunta_numero(Atributo, Valor) :-
-    conhece(sim, Atributo, Valor), !.
-
-pergunta_numero(Atributo, Valor) :-
-    \+ conhece(_, Atributo, _),
-    write('Qual o valor para '), write(Atributo), write('? '),
-    read(UserVal),
-    asserta(conhece(sim, Atributo, UserVal)),
-    number(UserVal),
-    number(Valor),
-    Valor =:= UserVal.
-
-pergunta_numero(Atributo, Valor) :-
-    conhece(sim, Atributo, Outro),
-    number(Outro),
-    number(Valor),
-    Valor =\= Outro, !, fail.
+    ( number(Valor), number(UserVal) -> Valor =:= UserVal
+    ; Valor == UserVal ).
