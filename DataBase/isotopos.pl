@@ -60945,4 +60945,3 @@ isotopo(
     abundancia(''),
     descoberta(2004)
 ).
-
