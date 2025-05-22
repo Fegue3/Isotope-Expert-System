@@ -21,7 +21,7 @@ This project is a **Prolog-based Expert System** that identifies and analyzes ch
   - Neutron count (N)
 - Reasoning about stability and radioactivity
 - Inference of isotope classification (stable, radioactive, synthetic)
-- Support for common isotopes from H (Hydrogen) to U (Uranium)
+- Support for known isotopes including superheavy elements
 - Explanations for conclusions (traceable logic)
 
 ## 🚀 Getting Started
@@ -32,111 +32,84 @@ This project is a **Prolog-based Expert System** that identifies and analyzes ch
 
 ### Running the System
 
-1. Clone the repository or download the `isotope_expert_system.pl` file.
-2. Open a terminal and launch SWI-Prolog:
+1. Clone the repository or download the files `perito.pl` and `isotopos.pl`.
+2. Launch SWI-Prolog:
 
 ```bash
 swipl
 ```
 
-3. Load the system:
+3. Load the expert shell:
 
 ```prolog
-?- [isotope_expert_system].
+?- consult(perito).
 ```
 
-4. Start the expert system:
+4. Follow the interactive shell:
 
-```prolog
-?- start.
+```
+Concha simples de Sistema Pericial
+Versao de 2024
+
+Comandos disponiveis:
+1 - Consultar uma Base de Conhecimento (BC)
+2 - Solucionar
+3 - Sair
 ```
 
-## 🧑‍💻 Usage
+5. Load the knowledge base:
 
-After launching the system, the program will ask you a series of questions to identify the isotope and infer its properties.
-
-You may also manually query facts or rules, such as:
-
-```prolog
-?- identify_isotope(1, 2, Isotope).
-Isotope = deuterium.
+```
+|: 1.
+Nome da BC: |: isotopos.
+BC consultada com sucesso.
 ```
 
-## 💡 Examples
+6. Solve a case:
 
-### Example 1: Hydrogen Isotope
-
-```prolog
-?- start.
-Welcome to the Isotope Expert System!
-Enter the atomic number (Z): 1
-Enter the mass number (A): 2
-
-==> Element: Hydrogen
-==> Neutron count: 1
-==> Isotope: Deuterium
-==> Stability: Stable
-==> Type: Naturally occurring
+```
+|: 2.
+Qual o simbolo do elemento? |: Ts.
+Qual o valor para numero_atomico? |: 117.
+Qual o valor para numero_neutroes? |: 177.
+Qual o valor para numero_massa? |: 294.
+Qual o valor para estabilidade? |: instavel.
 ```
 
-### Example 2: Carbon-14
+## 💡 Example Output
 
 ```prolog
-?- start.
-Enter the atomic number (Z): 6
-Enter the mass number (A): 14
+Isótopo encontrado: Ts-294
+Simbolo: Ts
+Número atómico: 117
+Número de neutrões: 177
+Número de massa: 294
+Estabilidade: instavel
+Meia-vida: meia_vida(51_ms)
+Tipo de decaimento: tipo_decaimento(A(100%))
+Raio nuclear: raio_nuclear()
+Spin e paridade: spin_paridade()
+Massa atómica: massa_atomica(294210840)
+Excesso de massa: excesso_massa(196397)
+Energia de ligação: energia_ligacao(7092)
+Abundância: abundancia()
+Descoberta: descoberta(2010)
 
-==> Element: Carbon
-==> Neutron count: 8
-==> Isotope: Carbon-14
-==> Stability: Radioactive
-==> Use: Radiocarbon dating
+Resposta encontrada: Ts-294
 ```
 
-### Example 3: Uranium-238
+## ⚙️ System Rules (Excerpt)
 
 ```prolog
-?- start.
-Enter the atomic number (Z): 92
-Enter the mass number (A): 238
-
-==> Element: Uranium
-==> Neutron count: 146
-==> Isotope: Uranium-238
-==> Stability: Radioactive (very long half-life)
-==> Use: Nuclear fuel, dating rocks
-```
-
-## ⚙️ System Rules (Simplified)
-
-```prolog
-isotope(1, 1, protium).
-isotope(1, 2, deuterium).
-isotope(1, 3, tritium).
-
-isotope(6, 12, carbon_12).
-isotope(6, 14, carbon_14).
-
-isotope(92, 238, uranium_238).
-
-stable(deuterium).
-stable(carbon_12).
-
-radioactive(tritium).
-radioactive(carbon_14).
-radioactive(uranium_238).
+isotopo(ts, 294, numero_atomico(117), numero_neutroes(177),
+        estabilidade(instavel), meia_vida(51_ms), tipo_decaimento(a(100)),
+        massa_atomica(294210840), excesso_massa(196397), energia_ligacao(7092),
+        descoberta(2010)).
 ```
 
 ## 🔍 How It Works
 
-The expert system uses simple logic rules to:
-
-1. Match atomic and mass numbers to known isotopes.
-2. Calculate the neutron count (A - Z).
-3. Infer stability based on known data.
-4. Display additional insights based on historical or scientific use.
-
-The reasoning is explainable and extensible, enabling you to add more isotopes or rules easily.
+The expert system loads a knowledge base (e.g. `isotopos.pl`) and uses a simple question-driven interface to guide the user. It uses logical inference to match input values to a known isotope entry and provides all related properties stored in the knowledge base.
 
 ## 📦 Dependencies
 
