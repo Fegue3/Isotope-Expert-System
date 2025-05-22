@@ -98,7 +98,7 @@ Descoberta: descoberta(2010)
 Resposta encontrada: Ts-294
 ```
 
-## ⚙️ System Rules (Excerpt)
+## ⚙️ System Rules (Expert)
 
 ```prolog
 isotopo(ts, 294, numero_atomico(117), numero_neutroes(177),
